@@ -85,7 +85,7 @@ const ValidarSeContaCadastradaParaExclusão = (req, res, next) => {
     next();
 }
 
-const validacoesdepositobancario = (req, res, next) => {
+const validacoesDepositoBancario = (req, res, next) => {
     const { numero_conta, valor } = req.body;
 
     if (!numero_conta) {
@@ -171,7 +171,7 @@ module.exports = {
     ValidarSeContaCadastrada,
     ValidarSeContaCadastradaParaExclusão,
     verificarSenha_Banco,
-    validacoesdepositobancario,
+    validacoesDepositoBancario,
     validacoesSaqueBancario,
     validacoesTransferencias,
     validacoesSaldo,

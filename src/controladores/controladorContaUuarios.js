@@ -74,7 +74,7 @@ const depositoEmConta = (req, res) => {
     const registroDeposito = {
         data: format(new Date(), "dd-MM-yyyy HH:mm:ss"),
         numero_conta: numero_conta,
-        valor: Number(valor)
+        valor: parseInt(valor)
     }
     depositos.push(registroDeposito);
 
@@ -98,13 +98,13 @@ const saque = (req, res) => {
     }
 
     if (valor > contaInformada.saldo) {
-        return res.status(403).json({ 'mensagem': 'Saldo insuficiente indisponivel!' });
+        return res.status(400).json({ 'mensagem': 'Saldo insuficiente indisponivel!' });
     }
 
     const registroSaque = {
         data: format(new Date(), "dd-MM-yyyy HH:mm:ss"),
         numero_conta: numero_conta,
-        valor: Number(valor)
+        valor: parseInt(valor)
     }
     saques.push(registroSaque)
     contaInformada.saldo -= valor
@@ -118,14 +118,14 @@ const tranferenciaEntreContas = (req, res) => {
         return conta.numero === numero_conta_origem;
     })
     if (!contaOrigemInformada) {
-        return res.status(404).json({ 'mensagem': 'Não existe conta cadastrada para o numero informado!' });
+        return res.status(404).json({ 'mensagem': 'Não existe conta origem cadastrada para o numero informado!' });
     }
 
     const contaDestinoInformada = contas.find((conta) => {
         return conta.numero === numero_conta_destino;
     })
     if (!contaDestinoInformada) {
-        return res.status(404).json({ 'mensagem': 'Não existe conta cadastrada para o numero informado!' });
+        return res.status(404).json({ 'mensagem': 'Não existe conta destino cadastrada para o numero informado!' });
     }
 
     if (contaOrigemInformada.usuario.senha !== senha) {
@@ -160,7 +160,7 @@ const saldoContaBanco = (req, res) => {
     }
 
     if (contaInformada.usuario.senha !== senha) {
-        return res.status(401).json({ 'mensagem': 'A senha do banco informada é inválida!' })
+        return res.status(401).json({ 'mensagem': 'Senha inválida!' })
     }
 
     return res.status(201).json({
